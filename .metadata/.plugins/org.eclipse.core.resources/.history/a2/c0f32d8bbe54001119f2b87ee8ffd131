@@ -1,0 +1,81 @@
+package com.sample;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+/*
+ * ServletConfig api를 활용한 초기화 파라미터
+ * -servletconfig 객체는 서블릿 생성할때 1개 생성되는 객체
+ * -DD(web.xml)을 읽어서 이름/값의 쌍으로 된 초기화 파라미터를 읽어서 저장
+ * -sgetServletConfig()
+ * 
+ * ServletContext api를 활용한 초기화 파라미터
+ * -servletcontext 객체는 web application 당 하나씩 생성
+ * -앱 전체에서 참조할 수 있는 초기화 파라미터를 저장함
+ * -servlet에서는 getServletContext()로 객체 획득
+ * -web.xml
+ * 
+ */
+
+@WebServlet(
+		urlPatterns = { "/InitParam" }, 
+		initParams = {
+//			@WebInitParam(name = "company", value = "gl"),
+//			@WebInitParam(name = "manager", value = "hi"),
+			@WebInitParam(name = "tel", value = "010-1111-1111"),
+			@WebInitParam(name = "email", value = "globalin@naver.com")
+		}
+	)
+public class InitParam extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private String company;
+	private String manager;
+	private String tel;
+	private String email;
+	
+     
+	
+	@Override
+	public void init() throws ServletException {
+		company = "globalin";
+		
+		company = getServletContext().getInitParameter("company");
+		manager = getServletContext().getInitParameter("manager");
+		tel = getServletConfig().getInitParameter("tel");
+		email = getServletConfig().getInitParameter("email");
+		
+		
+	}
+	
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		requestProcess(request, response);
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		doGet(request, response);
+	}
+	
+	protected void requestProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		// 한글처리
+		response.setContentType("text/html; charset=UTF-8");
+		// 문자 테이러를 출력하기 위한 PrintWriter 객체 생성
+		PrintWriter out = response.getWriter();
+		out.print("<html>");
+		out.print("<head><title></title></head>");
+		out.print("<body>");
+		out.print(company + "<br>" + manager + "<br>" + tel + "<br>" + email);
+		out.print("</body>");
+		out.print("</html>");
+
+	}
+}

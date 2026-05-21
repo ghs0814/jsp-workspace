@@ -1,0 +1,51 @@
+package com.login;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/login/Sport")
+public class SportServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		requestProcess(request, response);
+		
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		doGet(request, response);
+	}
+	
+	protected void requestProcess(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		request.setCharacterEncoding("utf-8");
+		
+		String[] sports = request.getParameterValues("sports");
+		String gender = request.getParameter("gender");
+		
+		//한글처리
+		response.setContentType("text/html; charset=UTF-8");
+		//문자 테이러를 출력하기 위한 PrintWriter 객체 생성
+		PrintWriter out =response.getWriter();
+		
+		out.print("<html>");
+		out.print("<head><title></title></head>");
+		out.print("<body>");
+		for(String sport : sports) {
+			out.print(sport + "<br>");
+		}
+		out.print(gender);
+		out.print("</body>");
+		out.print("</html>");
+	}
+}

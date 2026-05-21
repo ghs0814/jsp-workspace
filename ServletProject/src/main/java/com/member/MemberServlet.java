@@ -1,0 +1,52 @@
+package com.member;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/member/Member")
+public class MemberServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		requestProcess(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+	protected void requestProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		// 한글처리
+		response.setContentType("text/html; charset=UTF-8");
+		// 문자 테이러를 출력하기 위한 PrintWriter 객체 생성
+		PrintWriter out = response.getWriter();
+
+		
+		
+		
+		out.print("<html>");
+		out.print("<head><title></title></head>");
+		out.print("<body>");
+		Enumeration<String> enu = request.getParameterNames();
+		while(enu.hasMoreElements()) {
+			String name = enu.nextElement();
+			String value = request.getParameter(name);
+			out.print(name + " : " + value + "<br>");	
+		}
+		out.print("</body>");
+		out.print("</html>");
+	}
+
+}
