@@ -1,0 +1,49 @@
+package com.sample;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+/*
+ * 메서드 호출을 통해 페이지를 이동할 수 있는 방법에는 두가지가 있다.
+ * foward방식
+ * 		url이 바뀌지 않음, 요청객체와 응답객체를 그대로 전달. 빠르다
+ * 		소속객체 : request
+ * 
+ * redirect방식
+ * 		url이 바뀜, 요청객체와 응답객체가 유지되지 않음. 느리다
+ * 		소속객체 : response
+ */
+
+@WebServlet("/Source")
+public class Source extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		requestProcess(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		requestProcess(request, response);
+	}
+
+	protected void requestProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("Source Start...");
+		
+		//forward
+		//RequestDispatcher view = request.getRequestDispatcher("Destination");
+		//view.forward(request, response);
+		
+		//redirect
+		response.sendRedirect("Destination");
+	}
+
+}

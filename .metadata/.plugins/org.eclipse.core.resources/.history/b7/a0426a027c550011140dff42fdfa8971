@@ -1,0 +1,51 @@
+package com.bbs;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/bbs/VisitInsert")
+public class VisitInsert extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		requestProcess(request, response);
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		requestProcess(request, response);
+	}
+	
+protected void requestProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	request.setCharacterEncoding("utf-8");
+	response.setContentType("text/html; charset=UTF-8");
+	
+	PrintWriter out = response.getWriter();
+	
+	out.print("<html>");
+	out.print("<head><title></title></head>");
+	out.print("<body>");
+	
+	out.print("</body>");
+	out.print("</html>");
+	
+	
+	String writer = request.getParameter("writer");
+	String memo = request.getParameter("memo");
+	
+	System.out.println("작성자" + writer);
+	System.out.println("내 용" + memo);
+	}
+
+}

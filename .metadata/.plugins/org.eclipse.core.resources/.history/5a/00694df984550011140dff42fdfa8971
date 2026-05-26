@@ -1,0 +1,96 @@
+package com.bbs;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Enumeration;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class VisitList
+ */
+@WebServlet("/bbs/VisitList")
+public class VisitList extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		requestProcess(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		requestProcess(request, response);
+	}
+
+	protected void requestProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=UTF-8");
+
+		PrintWriter out = response.getWriter();
+		try {
+			out.print("<html>");
+			out.print("<head><title></title></head>");
+			out.print("<body>");
+			
+			String sql = "select no, writer, meno, regdate from visit order by no desc";
+			
+			// db 연결
+			Connection con = null;
+			PreparedStatement pstmt = null;
+
+			try {
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "scott", "tiger");
+				pstmt = con.prepareStatement(sql);
+
+				pstmt.executeQuery();
+
+			} catch (ClassNotFoundException ce) {
+
+			} catch (SQLException se) {
+
+			} finally {
+				try {
+					if (pstmt != null)
+						pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				try {
+					if (con != null)
+						con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			
+			
+			
+			
+			
+			
+			out.print("</body>");
+			out.print("</html>");
+			
+			
+		}finally {
+			out.close();
+			
+		}
+		
+		
+	}
+
+}
